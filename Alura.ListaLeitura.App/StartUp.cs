@@ -22,7 +22,8 @@ namespace Alura.ListaLeitura.App
             {
                 {"/livros/paraler", LivrosParaLer },
                 {"/livros/lendo", LivrosLendo },
-                {"/livros/lidos", LivrosLidos }
+                {"/livros/lidos", LivrosLidos },
+                {"/", TesteHeader }
             };
 
             if (caminhosAtendidos.ContainsKey(httpContext.Request.Path))
@@ -57,5 +58,10 @@ namespace Alura.ListaLeitura.App
             return httpContext.Response.WriteAsync(_repo.Lidos.ToString());
         }
 
+        private Task TesteHeader(HttpContext httpContext)
+        {
+            var variavel = httpContext.Request.Method;
+            return httpContext.Response.WriteAsync($"Metodo utilizado nessa requisicao : {variavel}");
+        }
     }
 }
