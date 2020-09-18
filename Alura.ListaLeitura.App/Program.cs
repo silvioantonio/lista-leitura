@@ -13,7 +13,7 @@ namespace Alura.ListaLeitura.App
 
             // Objeto 'host' que ira hospedar chamadas web
             /* O WebHostBuilder e responsavel por construir um hospedeiro web
-                // A implementaçao é definida pelo 'UseKestrel()', indica qual servidor que implementa o modelo http
+                // A implementaçao é definida pelo 'UseKestrel()', indica que iremos usar o servidor kestrel como servidor http
                 // Preciso dizer qual classe sera responsavel pela inicializaçao usando UseStartup<class>()
             */
             IWebHost host = new WebHostBuilder()
