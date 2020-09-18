@@ -1,6 +1,7 @@
 ﻿using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App
@@ -10,7 +11,24 @@ namespace Alura.ListaLeitura.App
        public void Configure(IApplicationBuilder applicationBuilder) 
         {
             //Um objeto desta classe é passado como argumento de entrada do delegate RequestDelegate para escrever as respostas das requisições.
-            applicationBuilder.Run(LivrosParaLer);
+            applicationBuilder.Run(Roteamento);
+        }
+
+        private Task Roteamento(HttpContext httpContext)
+        {
+            var _repo = new LivroRepositorioCSV();
+
+            var caminhosAtendidos = new Dictionary<string, string>
+            {
+                {"/livros/paraler", _repo.ParaLer.ToString() },
+                {"/livros/lendo", _repo.Lendo.ToString() },
+                {"/livros/lidos", _repo.Lidos.ToString() }
+            };
+
+            if(caminhosAtendidos.ContainsKey(httpContext.Request.Path))
+                return httpContext.Response.WriteAsync(caminhosAtendidos[httpContext.Request.Path]);
+
+            return httpContext.Response.WriteAsync(httpContext.Request.Path);
         }
 
         //O compilador ignora os modificadores na avaliação de um delegate.
