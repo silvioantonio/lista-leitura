@@ -1,7 +1,4 @@
-﻿using Alura.ListaLeitura.App.Logica;
-using Alura.ListaLeitura.App.Mvc;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Alura.ListaLeitura.App
@@ -11,8 +8,8 @@ namespace Alura.ListaLeitura.App
         //Passando minha interface por parametro no metodo, o aspnet ira instanciar automaticamente(similar ao @Autowired no spring)
         public void ConfigureServices(IServiceCollection service)
         { 
-            service.AddRouting();// Adiciona roteamento
-            service.AddMvc();// Adiciona o Mvc
+            //service.AddRouting();// Adiciona roteamento
+            service.AddMvc();// Adiciona o Mvc, internamente ja chama o addRouting()
         }
 
        //public void Configure(IApplicationBuilder applicationBuilder) 

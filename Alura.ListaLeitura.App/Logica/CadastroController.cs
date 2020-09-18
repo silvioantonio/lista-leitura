@@ -2,7 +2,7 @@
 using Alura.ListaLeitura.App.Negocio;
 using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logica
@@ -10,7 +10,20 @@ namespace Alura.ListaLeitura.App.Logica
     public class CadastroController
     {
 
+        public string Incluir(Livro livro)
+        {
+            var repo = new LivroRepositorioCSV();
+            repo.Incluir(livro);
+            return "O livro foi adicionado!!!";
+        }
 
+        //O estagio executeResult acontece depois da execuçao da action, e caso nao tratado, ele retorna html como texto puro
+        public IActionResult Exibir(HttpContext context)
+        {
+            //var html = HtmlUtils.CarregaArquivoHtml("formulario.html");
+            var html = new ViewResult() { ViewName = "formulrio.html" };
+            return html;
+        }
 
 
         /*

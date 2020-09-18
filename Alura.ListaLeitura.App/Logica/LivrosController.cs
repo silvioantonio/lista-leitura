@@ -1,8 +1,6 @@
 ﻿using Alura.ListaLeitura.App.HTML;
 using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,13 +47,12 @@ namespace Alura.ListaLeitura.App.Logica
             return httpContext.Response.WriteAsync($"Metodo utilizado nessa requisicao : {variavel}");
         }
 
-        public static Task Detalhes(HttpContext context)
+        public string Detalhes(int id)
         {
-            var id = Convert.ToInt32(context.GetRouteValue("id"));
             var repo = new LivroRepositorioCSV();
             var livro = repo.Todos.First(l => l.Id == id);
 
-            return context.Response.WriteAsync(livro.Detalhes());
+            return livro.Detalhes();
         }
 
     }
