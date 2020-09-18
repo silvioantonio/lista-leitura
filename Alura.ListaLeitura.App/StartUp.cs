@@ -15,7 +15,7 @@ namespace Alura.ListaLeitura.App
     {
         //Passando minha interface por parametro no metodo, o aspnet ira instanciar automaticamente(similar ao @Autowired no spring)
         public void ConfigureServices(IServiceCollection service)
-        {
+        { 
             service.AddRouting();
         }
 
@@ -32,14 +32,27 @@ namespace Alura.ListaLeitura.App
             builder.MapRoute("livros/lidos", LivrosLidos);
             builder.MapRoute("livros/lendo", LivrosLendo);
 
-            builder.MapRoute("cadastro/novolivro/{nome}/{autor}", NovoLivro);
-
             //Colocando essa constraint ({id:int}), eu delimito o id apenas ao tipo inteiro, caso contrario erro 404
             builder.MapRoute("livros/detalhes/{id:int}", ExibirDetalhesLivro);
+
+            builder.MapRoute("cadastro/novolivro/{nome}/{autor}", NovoLivro);
+            builder.MapRoute("cadastro/novolivro", Exibeformulario);
 
             var rotas = builder.Build();
 
             app.UseRouter(rotas);
+        }
+
+        private Task Exibeformulario(HttpContext context)
+        {
+            var html = @"<html>
+                            <form>
+                                <input/>
+                                <input/>
+                                <button>Cadastrar<button/>
+                            </form>
+                        </html>";
+            return context.Response.WriteAsync(html);
         }
 
         // Roteamento(antigo) feito manualmente sem o ASPNET.CORE
