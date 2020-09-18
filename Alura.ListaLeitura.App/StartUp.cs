@@ -18,17 +18,21 @@ namespace Alura.ListaLeitura.App
         {
             var _repo = new LivroRepositorioCSV();
 
-            var caminhosAtendidos = new Dictionary<string, string>
+            var caminhosAtendidos = new Dictionary<string, RequestDelegate>
             {
-                {"/livros/paraler", _repo.ParaLer.ToString() },
-                {"/livros/lendo", _repo.Lendo.ToString() },
-                {"/livros/lidos", _repo.Lidos.ToString() }
+                {"/livros/paraler", LivrosParaLer },
+                {"/livros/lendo", LivrosLendo },
+                {"/livros/lidos", LivrosLidos }
             };
 
-            if(caminhosAtendidos.ContainsKey(httpContext.Request.Path))
-                return httpContext.Response.WriteAsync(caminhosAtendidos[httpContext.Request.Path]);
+            if (caminhosAtendidos.ContainsKey(httpContext.Request.Path))
+            {
+                var metodo = caminhosAtendidos[httpContext.Request.Path];
+                return metodo.Invoke(httpContext);
+            }
 
-            return httpContext.Response.WriteAsync(httpContext.Request.Path);
+            httpContext.Response.StatusCode = 404;
+            return httpContext.Response.WriteAsync("Pagina inexistente!");
         }
 
         //O compilador ignora os modificadores na avaliação de um delegate.
@@ -39,6 +43,18 @@ namespace Alura.ListaLeitura.App
         {
             var _repo = new LivroRepositorioCSV();
             return httpContext.Response.WriteAsync(_repo.ParaLer.ToString());
+        }
+
+        private Task LivrosLendo(HttpContext httpContext)
+        {
+            var _repo = new LivroRepositorioCSV();
+            return httpContext.Response.WriteAsync(_repo.Lendo.ToString());
+        }
+
+        private Task LivrosLidos(HttpContext httpContext)
+        {
+            var _repo = new LivroRepositorioCSV();
+            return httpContext.Response.WriteAsync(_repo.Lidos.ToString());
         }
 
     }
