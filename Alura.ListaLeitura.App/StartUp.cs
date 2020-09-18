@@ -1,6 +1,8 @@
 ﻿using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,12 +10,31 @@ namespace Alura.ListaLeitura.App
 {
     public class StartUp
     {
-       public void Configure(IApplicationBuilder applicationBuilder) 
+        //Passando minha interface por parametro no metodo, o aspnet ira instanciar automaticamente(similar ao @Autowired no spring)
+        public void ConfigureServices(IServiceCollection service)
         {
-            //Um objeto desta classe é passado como argumento de entrada do delegate RequestDelegate para escrever as respostas das requisições.
-            applicationBuilder.Run(Roteamento);
+            service.AddRouting();
         }
 
+       //public void Configure(IApplicationBuilder applicationBuilder) 
+       // {
+       //     //Um objeto desta classe é passado como argumento de entrada do delegate RequestDelegate para escrever as respostas das requisições.
+       //     applicationBuilder.Run(Roteamento);
+       // }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            var builder = new RouteBuilder(app);
+            builder.MapRoute("livros/paraler", LivrosParaLer);
+            builder.MapRoute("livros/lidos", LivrosLidos);
+            builder.MapRoute("livros/lendo", LivrosLendo);
+
+            var rotas = builder.Build();
+
+            app.UseRouter(rotas);
+        }
+
+        // Roteamento feito manualmente sem o ASPNET.CORE
         private Task Roteamento(HttpContext httpContext)
         {
             var _repo = new LivroRepositorioCSV();
