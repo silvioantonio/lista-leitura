@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App
@@ -32,12 +34,14 @@ namespace Alura.ListaLeitura.App
 
             builder.MapRoute("cadastro/novolivro/{nome}/{autor}", NovoLivro);
 
+            //Colocando essa constraint ({id:int}), eu delimito o id apenas ao tipo inteiro, caso contrario erro 404
+            builder.MapRoute("livros/detalhes/{id:int}", ExibirDetalhesLivro);
+
             var rotas = builder.Build();
 
             app.UseRouter(rotas);
         }
 
-        
         // Roteamento(antigo) feito manualmente sem o ASPNET.CORE
         private Task Roteamento(HttpContext httpContext)
         {
@@ -101,5 +105,13 @@ namespace Alura.ListaLeitura.App
             return context.Response.WriteAsync("O livro foi adicionado!!!");
         }
 
+        private Task ExibirDetalhesLivro(HttpContext context)
+        {
+            var id = Convert.ToInt32(context.GetRouteValue("id"));
+            var repo = new LivroRepositorioCSV();
+            var livro = repo.Todos.First(l => l.Id == id);
+
+            return context.Response.WriteAsync(livro.Detalhes());
+        }
     }
 }
