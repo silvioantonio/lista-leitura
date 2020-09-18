@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Alura.ListaLeitura.App.Logica;
+using Alura.ListaLeitura.App.Mvc;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +11,8 @@ namespace Alura.ListaLeitura.App
         //Passando minha interface por parametro no metodo, o aspnet ira instanciar automaticamente(similar ao @Autowired no spring)
         public void ConfigureServices(IServiceCollection service)
         { 
-            service.AddRouting();
+            service.AddRouting();// Adiciona roteamento
+            service.AddMvc();// Adiciona o Mvc
         }
 
        //public void Configure(IApplicationBuilder applicationBuilder) 
@@ -20,21 +23,33 @@ namespace Alura.ListaLeitura.App
 
         public void Configure(IApplicationBuilder app)
         {
-            var builder = new RouteBuilder(app);
-            builder.MapRoute("livros/paraler", LivrosLogica.LivrosParaLer);
-            builder.MapRoute("livros/lidos", LivrosLogica.LivrosLidos);
-            builder.MapRoute("livros/lendo", LivrosLogica.LivrosLendo);
+            /*
+             * Isso era usado antes do mvc
+             * 
+                    var builder = new RouteBuilder(app);
 
-            //Colocando essa constraint ({id:int}), eu delimito o id apenas ao tipo inteiro, caso contrario erro 404
-            builder.MapRoute("livros/detalhes/{id:int}", LivrosLogica.ExibirDetalhesLivro);
+                    //Agora aplicamos um roteamento padrao criado com base no padrao das classes e metodos usando reflection
+                    builder.MapRoute("{classe}/{metodo}", RoteamentoPadrao.TratamentoPadrao);
 
-            builder.MapRoute("cadastro/novolivro/{nome}/{autor}", CadastroLogica.NovoLivro);
-            builder.MapRoute("cadastro/incluir", CadastroLogica.IncluirLivro);
-            builder.MapRoute("cadastro/novolivro", CadastroLogica.Exibeformulario);
+                    //builder.MapRoute("livros/ParaLer", LivrosLogica.ParaLer);
+                    //builder.MapRoute("livros/Lidos", LivrosLogica.Lidos);
+                    //builder.MapRoute("livros/Lendo", LivrosLogica.Lendo);
 
-            var rotas = builder.Build();
+                    ////Colocando essa constraint ({id:int}), eu delimito o id apenas ao tipo inteiro, caso contrario erro 404
+                    //builder.MapRoute("livros/Detalhes/{id:int}", LivrosLogica.Detalhes);
 
-            app.UseRouter(rotas);
+                    //builder.MapRoute("cadastro/NovoLivro/{nome}/{autor}", CadastroLogica.NovoLivro);
+                    //builder.MapRoute("cadastro/Incluir", CadastroLogica.Incluir);
+                    //builder.MapRoute("cadastro/Exibir", CadastroLogica.Exibir);
+
+                    var rotas = builder.Build();
+
+                    app.UseRouter(rotas);
+            */
+
+            // Com mvc o padrao no nome das classes deve ser seguido
+            app.UseMvcWithDefaultRoute();
+
         }
 
         

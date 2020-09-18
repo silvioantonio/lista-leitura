@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logica
 {
-    public class LivrosLogica
+    public class LivrosController
     {
 
         
@@ -16,7 +16,7 @@ namespace Alura.ListaLeitura.App.Logica
         //Quando uma requisição for feita, um obj do HttpContext vira
         //O Retorno deve ser Task (Paralelismo), pois o metodo 'Run()' aceita apenas esse tipo
         //O WriteAsync() retorna o tipo task
-        public static Task LivrosParaLer(HttpContext httpContext)
+        public static Task ParaLer(HttpContext httpContext)
         {
             var _repo = new LivroRepositorioCSV();
 
@@ -31,13 +31,13 @@ namespace Alura.ListaLeitura.App.Logica
             return httpContext.Response.WriteAsync(carregarArquivo);
         }
 
-        public static Task LivrosLendo(HttpContext httpContext)
+        public static Task Lendo(HttpContext httpContext)
         {
             var _repo = new LivroRepositorioCSV();
             return httpContext.Response.WriteAsync(_repo.Lendo.ToString());
         }
 
-        public static Task LivrosLidos(HttpContext httpContext)
+        public static Task Lidos(HttpContext httpContext)
         {
             var _repo = new LivroRepositorioCSV();
             return httpContext.Response.WriteAsync(_repo.Lidos.ToString());
@@ -49,7 +49,7 @@ namespace Alura.ListaLeitura.App.Logica
             return httpContext.Response.WriteAsync($"Metodo utilizado nessa requisicao : {variavel}");
         }
 
-        public static Task ExibirDetalhesLivro(HttpContext context)
+        public static Task Detalhes(HttpContext context)
         {
             var id = Convert.ToInt32(context.GetRouteValue("id"));
             var repo = new LivroRepositorioCSV();

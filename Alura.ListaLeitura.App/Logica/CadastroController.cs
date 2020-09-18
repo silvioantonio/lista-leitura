@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logica
 {
-    public class CadastroLogica
+    public class CadastroController
     {
+
+
+
+
+        /*
+         * Antes do framework deveriamos escrever e declarar os metodos controladores dessa forma
 
         public static Task NovoLivro(HttpContext context)
         {
@@ -22,7 +28,7 @@ namespace Alura.ListaLeitura.App.Logica
             return context.Response.WriteAsync("O livro foi adicionado!!!");
         }
 
-        public static Task IncluirLivro(HttpContext context)
+        public static Task Incluir(HttpContext context)
         {
             var livro = new Livro()
             {
@@ -34,10 +40,11 @@ namespace Alura.ListaLeitura.App.Logica
             return context.Response.WriteAsync("O livro foi adicionado!!!");
         }
 
-        public static Task Exibeformulario(HttpContext context)
+        public static Task Exibir(HttpContext context)
         {
             var html = HtmlUtils.CarregaArquivoHtml("formulario.html");
             return context.Response.WriteAsync(html);
         }
+        */
     }
 }
