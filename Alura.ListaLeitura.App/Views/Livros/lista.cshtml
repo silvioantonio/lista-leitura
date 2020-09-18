@@ -6,6 +6,11 @@
     <title></title>
 </head>
 <body>
-    <ul>#item#</ul>
+    <ul>
+        @foreach (var item in ViewBag.Livros)
+		{
+		<li>@item.Titulo - @item.Autor</li>
+		}
+    </ul>
 </body>
 </html>

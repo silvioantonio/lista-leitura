@@ -44,6 +44,9 @@ namespace Alura.ListaLeitura.App
                     app.UseRouter(rotas);
             */
 
+            //Utilizando essa funcionalidade apenas em ambiente de desenvolvimento
+            app.UseDeveloperExceptionPage();
+
             // Com mvc o padrao no nome das classes deve ser seguido
             app.UseMvcWithDefaultRoute();
 

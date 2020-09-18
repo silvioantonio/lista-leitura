@@ -1,9 +1,6 @@
-﻿using Alura.ListaLeitura.App.HTML;
-using Alura.ListaLeitura.App.Negocio;
+﻿using Alura.ListaLeitura.App.Negocio;
 using Alura.ListaLeitura.App.Repositorio;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logica
 {
@@ -18,10 +15,10 @@ namespace Alura.ListaLeitura.App.Logica
         }
 
         //O estagio executeResult acontece depois da execuçao da action, e caso nao tratado, ele retorna html como texto puro
-        public IActionResult Exibir(HttpContext context)
+        public IActionResult Exibir()
         {
             //var html = HtmlUtils.CarregaArquivoHtml("formulario.html");
-            var html = new ViewResult() { ViewName = "formulrio.html" };
+            var html = new ViewResult { ViewName = "formulario.cshtml" };
             return html;
         }
 
