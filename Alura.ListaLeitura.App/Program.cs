@@ -13,7 +13,7 @@ namespace Alura.ListaLeitura.App
 
             // Objeto 'host' que ira hospedar chamadas web
             /* O WebHostBuilder e responsavel por construir um hospedeiro web
-                // A implementaçao é definida pelo 'UseKestrel()', indica que iremos usar o servidor kestrel como servidor http
+                // A implementaçao é definida pelo 'UseKestrel()', indica que iremos usar o servidor [kestrel neste link](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-3.1) como servidor http
                 // Preciso dizer qual classe sera responsavel pela inicializaçao usando UseStartup<class>()
             */
             IWebHost host = new WebHostBuilder()
