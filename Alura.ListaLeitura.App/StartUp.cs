@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,15 +47,18 @@ namespace Alura.ListaLeitura.App
 
         private Task Exibeformulario(HttpContext context)
         {
-            var html = @"
-                        <html>
-                            <form action='incluir'>
-                                <input name='titulo'/>
-                                <input name='autor'/>
-                                <button>Cadastrar</button>
-                            </form>
-                        </html>";
+            var html = CarregaArquivoHtml("formulario.html");
             return context.Response.WriteAsync(html);
+        }
+
+        private string CarregaArquivoHtml(string v)
+        {
+            var nomeCompletoArquivo = $"../../../HTML/{v}";
+
+            using (var arquivo = File.OpenText(nomeCompletoArquivo))
+            {
+                return arquivo.ReadToEnd();
+            }
         }
 
         // Roteamento(antigo) feito manualmente sem o ASPNET.CORE
